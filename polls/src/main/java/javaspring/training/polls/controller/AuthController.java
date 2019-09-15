@@ -1,4 +1,4 @@
-package javaspring.training.polls;
+package javaspring.training.polls.controller;
 
 import java.net.URI;
 import java.util.Collections;
