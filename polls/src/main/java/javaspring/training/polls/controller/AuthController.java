@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package javaspring.training.polls.controller;
 
 import java.net.URI;
@@ -31,75 +34,104 @@ import javaspring.training.polls.repository.RoleRepository;
 import javaspring.training.polls.repository.UserRepository;
 import javaspring.training.polls.security.JwtTokenProvider;
 
+/**
+ * The Class AuthController.
+ */
+/**
+ * @author vdhuynh
+ *
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-	@Autowired
-	AuthenticationManager authenticationManager;
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	RoleRepository roleRepository;
-	@Autowired
-	PasswordEncoder passwordEncoder;
-	@Autowired
-	JwtTokenProvider tokenProvider;
-	
-	@PostMapping("/signin")
-	public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
-		
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(
-						loginRequest.getUsernameOrEmail(), 
-						loginRequest.getPassword()
-				)
-		);
-		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		String jwt = tokenProvider.generateToken(authentication);
-		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-		
-		if(Boolean.TRUE.equals(userRepository.existsByUsername(signUpRequest.getUsername()))) {
-			return new ResponseEntity(
-						new ApiResponse(false, "Username is already taken!"),
-						HttpStatus.BAD_REQUEST);
-		}
-		
-		if(Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))) {
-			return new ResponseEntity(
-						new ApiResponse(false, "Email Adress already in use!"),
-						HttpStatus.BAD_REQUEST);
-		}
-		
-		//Creating user's account
-		User user = new User(
-				signUpRequest.getName(), 
-				signUpRequest.getUsername(), 
-				signUpRequest.getEmail(), 
-				signUpRequest.getPassword());
-		
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		
-		Role userRole = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(
-				()-> new AppException("User Role not set"));
-			
-		user.setRoles(Collections.singleton(userRole));
-		
-		User result = userRepository.save(user);
-		
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentContextPath()
-				.path("/api/users/{username}")
-				.buildAndExpand(result.getUsername()).toUri();
-		
-		return ResponseEntity.created(location).body(
-				new ApiResponse(true, "User registered successfully"));
-	}
+    /** The authentication manager. */
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    /** The user repository. */
+    @Autowired
+    private UserRepository userRepository;
+
+    /** The role repository. */
+    @Autowired
+    private RoleRepository roleRepository;
+
+    /** The password encoder. */
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    /** The token provider. */
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+
+    /**
+     * Authenticate user.
+     *
+     * @param loginRequest
+     *            the login request
+     * @return the response entity
+     */
+    @PostMapping("/signin")
+    public ResponseEntity<JwtAuthenticationResponse> authenticateUser(
+            @Valid @RequestBody LoginRequest loginRequest) {
+
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsernameOrEmail(),
+                        loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = tokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+    }
+
+    /**
+     * Register user.
+     *
+     * @param signUpRequest
+     *            the sign up request
+     * @return the response entity
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @PostMapping("/signup")
+    public ResponseEntity<ApiResponse> registerUser(
+            @Valid @RequestBody SignUpRequest signUpRequest) {
+
+        if (Boolean.TRUE.equals(
+                userRepository.existsByUsername(signUpRequest.getUsername()))) {
+            return new ResponseEntity(
+                    new ApiResponse(false, "Username is already taken!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        if (Boolean.TRUE.equals(
+                userRepository.existsByEmail(signUpRequest.getEmail()))) {
+            return new ResponseEntity(
+                    new ApiResponse(false, "Email Adress already in use!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        // Creating user's account
+        User user = new User(signUpRequest.getName(),
+                signUpRequest.getUsername(), signUpRequest.getEmail(),
+                signUpRequest.getPassword());
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new AppException("User Role not set"));
+
+        user.setRoles(Collections.singleton(userRole));
+
+        User result = userRepository.save(user);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/users/{username}")
+                .buildAndExpand(result.getUsername()).toUri();
+
+        return ResponseEntity.created(location)
+                .body(new ApiResponse(true, "User registered successfully"));
+    }
 }
