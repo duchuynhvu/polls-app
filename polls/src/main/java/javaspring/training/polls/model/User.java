@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -21,6 +22,8 @@ import javaspring.training.polls.model.audit.DateAudit;
 		})
 })
 public class User extends DateAudit {
+	private static final long serialVersionUID = 8824982351673496278L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -36,6 +39,7 @@ public class User extends DateAudit {
 	@NaturalId
 	@NotBlank
 	@Size(max=40)
+	@Email
 	private String email;
 	
 	@NotBlank
@@ -48,9 +52,6 @@ public class User extends DateAudit {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
-	public User() {
-
-	}
 
 	public User(String name, String username, String email, String password) {
 		this.name = name;

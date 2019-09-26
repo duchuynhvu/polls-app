@@ -26,7 +26,6 @@ public class UserPrincipal implements UserDetails {
 
 	public UserPrincipal(Long id, String name, String username, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.username = username;
@@ -36,8 +35,9 @@ public class UserPrincipal implements UserDetails {
 	}
 
 	public static UserPrincipal create(User user) {
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+		List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> 
+		new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+		
 		return new UserPrincipal(
 				user.getId()
 				, user.getName()

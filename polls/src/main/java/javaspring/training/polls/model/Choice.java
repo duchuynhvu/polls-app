@@ -1,5 +1,6 @@
 package javaspring.training.polls.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -15,7 +16,9 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "choices")
-public class Choice {
+public class Choice implements Serializable {
+	private static final long serialVersionUID = 4114111371978264019L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,8 +31,8 @@ public class Choice {
 	@JoinColumn(name = "poll_id", nullable = false)
 	private Poll poll;
 	
-	public Choice() {
-		
+	public Choice(@NotBlank @Size(max = 40) String text) {
+		this.text = text;
 	}
 
 	public Long getId() {

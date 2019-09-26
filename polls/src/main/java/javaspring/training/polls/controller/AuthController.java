@@ -47,7 +47,7 @@ public class AuthController {
 	JwtTokenProvider tokenProvider;
 	
 	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
+	public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
 		
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(
@@ -64,15 +64,15 @@ public class AuthController {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+	public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 		
-		if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+		if(Boolean.TRUE.equals(userRepository.existsByUsername(signUpRequest.getUsername()))) {
 			return new ResponseEntity(
 						new ApiResponse(false, "Username is already taken!"),
 						HttpStatus.BAD_REQUEST);
 		}
 		
-		if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+		if(Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))) {
 			return new ResponseEntity(
 						new ApiResponse(false, "Email Adress already in use!"),
 						HttpStatus.BAD_REQUEST);

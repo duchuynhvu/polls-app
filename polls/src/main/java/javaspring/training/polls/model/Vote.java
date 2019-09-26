@@ -20,6 +20,8 @@ import javaspring.training.polls.model.audit.DateAudit;
 		})
 })
 public class Vote extends DateAudit {
+	private static final long serialVersionUID = -8893026018372394163L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

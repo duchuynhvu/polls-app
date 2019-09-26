@@ -25,6 +25,7 @@ import javaspring.training.polls.model.audit.UserDateAudit;
 @Entity
 @Table(name = "polls")
 public class Poll extends UserDateAudit{
+	private static final long serialVersionUID = 3928346707616644449L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
