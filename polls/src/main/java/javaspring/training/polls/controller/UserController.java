@@ -59,15 +59,12 @@ public class UserController {
 		long pollCount = pollRepository.countByCreatedBy(user.getId());
 		long voteCount = voteRepository.countByUserId(user.getId());
 		
-		UserProfile userProfile = new UserProfile(
-				user.getId(), 
-				user.getUsername(), 
+		return new UserProfile(user.getId(), 
+		        user.getUsername(), 
 				user.getName(), 
 				user.getCreatedAt(), 
 				pollCount, 
 				voteCount);
-		
-		return userProfile;
 	}
 	
 	@GetMapping("/users/{username}/polls")

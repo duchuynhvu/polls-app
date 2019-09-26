@@ -31,7 +31,11 @@ public class Choice implements Serializable {
 	@JoinColumn(name = "poll_id", nullable = false)
 	private Poll poll;
 	
-	public Choice(@NotBlank @Size(max = 40) String text) {
+	
+	
+	public Choice() {}
+
+    public Choice(@NotBlank @Size(max = 40) String text) {
 		this.text = text;
 	}
 
@@ -61,8 +65,12 @@ public class Choice implements Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o) {
+		    return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+		    return false;
+		}
 		Choice choice = (Choice) o;
 		return Objects.equals(id, choice.id);
 	}
