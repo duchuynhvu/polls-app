@@ -2,6 +2,7 @@ package javaspring.training.polls.model;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -66,11 +67,11 @@ public class Poll extends UserDateAudit{
 	}
 
 	public List<Choice> getChoices() {
-		return choices;
+		return new ArrayList<>(choices);
 	}
 
 	public void setChoices(List<Choice> choices) {
-		this.choices = choices;
+		this.choices = new ArrayList<>(choices);
 	}
 
 	public Instant getExpirationDateTime() {
@@ -85,9 +86,15 @@ public class Poll extends UserDateAudit{
 		choices.add(choice);
 		choice.setPoll(this);
 	}
-	
-	public void removeChoice(Choice choice) {
-		choices.remove(choice);
+
+    public void removeChoice(Choice choice) {
+	    Iterator<Choice> itr = choices.iterator();
+		while (itr.hasNext()) {
+		    Choice ch = itr.next();
+		    if (ch.equals(choice)) {
+		        itr.remove();
+		    }
+		}
 		choice.setPoll(null);
 	}
 }

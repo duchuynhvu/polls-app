@@ -1,5 +1,6 @@
 package javaspring.training.polls.payload;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -30,11 +31,11 @@ public class PollRequest {
 	}
 
 	public List<ChoiceRequest> getChoices() {
-		return choices;
+		return new ArrayList<>(choices);
 	}
 
 	public void setChoices(List<ChoiceRequest> choices) {
-		this.choices = choices;
+		this.choices = new ArrayList<>(choices);
 	}
 
 	public PollLength getPollLength() {

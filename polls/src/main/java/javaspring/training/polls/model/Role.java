@@ -1,7 +1,5 @@
 package javaspring.training.polls.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,8 +13,7 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
-	private static final long serialVersionUID = 7300123769026620457L;
+public class Role {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

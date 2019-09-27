@@ -43,7 +43,7 @@ public class PollController {
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<ApiResponse> createPoll(@Valid @RequestBody PollRequest pollRequest) {
 		Poll poll = pollService.createPoll(pollRequest);
 		
@@ -56,7 +56,7 @@ public class PollController {
 	}
 	
 	@PostMapping("/{pollId}/votes")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public PollResponse getPollById(@CurrentUser UserPrincipal currentUser, 
 			@PathVariable Long pollId, @Valid @RequestBody VoteRequest voteRequest) {
 		return pollService.castVoteAndGetUpdatedPoll(pollId, voteRequest, currentUser);

@@ -94,21 +94,20 @@ public class AuthController {
      *            the sign up request
      * @return the response entity
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse> registerUser(
             @Valid @RequestBody SignUpRequest signUpRequest) {
 
         if (Boolean.TRUE.equals(
                 userRepository.existsByUsername(signUpRequest.getUsername()))) {
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
         if (Boolean.TRUE.equals(
                 userRepository.existsByEmail(signUpRequest.getEmail()))) {
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false, "Email Adress already in use!"),
                     HttpStatus.BAD_REQUEST);
         }

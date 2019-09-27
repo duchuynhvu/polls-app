@@ -37,10 +37,9 @@ public class UserController {
 	private PollService pollService;
 	
 	@GetMapping("/user/me")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-		UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-		return userSummary;
+		return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
 	}
 	
 	@GetMapping("/user/checkUsernameAvailability")
@@ -82,6 +81,6 @@ public class UserController {
 			@CurrentUser UserPrincipal currentUser,
 			@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
 			@RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
-		return pollService.getPollsCreatedBy(username, currentUser, page, size);
+		return pollService.getPollsVotedBy(username, currentUser, page, size);
 	}
 }

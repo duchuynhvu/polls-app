@@ -1,5 +1,6 @@
 package javaspring.training.polls.payload;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PagedResponse<T> {
@@ -15,7 +16,7 @@ public class PagedResponse<T> {
 	}
 	
 	public PagedResponse(List<T> content, int page, int size, long totalElements, int totalPages, boolean last) {
-		this.content = content;
+		this.content = new ArrayList<>(content);
 		this.page = page;
 		this.size = size;
 		this.totalElements = totalElements;
@@ -24,10 +25,10 @@ public class PagedResponse<T> {
 	}
 	
 	public List<T> getContent() {
-		return content;
+		return new ArrayList<>(content);
 	}
 	public void setContent(List<T> content) {
-		this.content = content;
+		this.content = new ArrayList<>(content);
 	}
 	public int getPage() {
 		return page;

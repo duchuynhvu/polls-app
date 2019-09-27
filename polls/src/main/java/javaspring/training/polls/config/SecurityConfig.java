@@ -26,7 +26,7 @@ import javaspring.training.polls.security.JwtAuthenticationFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	CustomUserDetailsService customUserDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
 
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;

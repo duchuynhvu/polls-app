@@ -24,25 +24,25 @@ public abstract class DateAudit implements Serializable {
 
     @CreatedDate
 	@Column(nullable = false, updatable = false)
-	private Instant CreatedAt;
+	private Instant createdAt;
 	
 	@LastModifiedDate
 	@Column(nullable = false)
-	private Instant UpdatedAt;
+	private Instant updatedAt;
 
 	public Instant getCreatedAt() {
-		return CreatedAt;
+		return createdAt;
 	}
 
 	public void setCreatedAt(Instant createdAt) {
-		CreatedAt = createdAt;
+		this.createdAt = createdAt;
 	}
 
 	public Instant getUpdatedAt() {
-		return UpdatedAt;
+		return updatedAt;
 	}
 
 	public void setUpdatedAt(Instant updatedAt) {
-		UpdatedAt = updatedAt;
+		this.updatedAt = updatedAt;
 	}
 }

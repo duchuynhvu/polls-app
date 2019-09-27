@@ -3,10 +3,11 @@ package javaspring.training.polls.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@SuppressWarnings("serial")
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 public class AppException extends RuntimeException {
-	public AppException(String message) {
+    private static final long serialVersionUID = -5801944777263057571L;
+
+    public AppException(String message) {
 		super(message);
 	}
 	

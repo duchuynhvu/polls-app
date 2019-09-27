@@ -1,6 +1,7 @@
 package javaspring.training.polls.payload;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class PollResponse {
 	private Long id;
 	private String question;
-	private List<ChoiceResponse> choices;
+	private List<ChoiceResponse> choices = new ArrayList<>();
 	private UserSummary createdBy;
 	private Instant creationDateTime;
 	private Instant expirationDateTime;
@@ -31,10 +32,10 @@ public class PollResponse {
 		this.question = question;
 	}
 	public List<ChoiceResponse> getChoices() {
-		return choices;
+		return new ArrayList<>(choices);
 	}
 	public void setChoices(List<ChoiceResponse> choices) {
-		this.choices = choices;
+		this.choices = new ArrayList<>(choices);
 	}
 	public UserSummary getCreatedBy() {
 		return createdBy;

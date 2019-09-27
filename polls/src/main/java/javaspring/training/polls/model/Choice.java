@@ -17,9 +17,9 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "choices")
 public class Choice implements Serializable {
-	private static final long serialVersionUID = 4114111371978264019L;
+    private static final long serialVersionUID = 4114111371978264019L;
 
-	@Id
+    @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

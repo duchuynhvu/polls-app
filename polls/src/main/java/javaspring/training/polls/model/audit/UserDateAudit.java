@@ -8,11 +8,12 @@ import org.springframework.data.annotation.LastModifiedBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@SuppressWarnings("serial")
 @MappedSuperclass
 @JsonIgnoreProperties(value = { "createdBy", "updatedBy" }, allowGetters = true)
 public abstract class UserDateAudit extends DateAudit {
-	@CreatedBy
+    private static final long serialVersionUID = -2019606043464528125L;
+
+    @CreatedBy
 	@Column(updatable = false)
 	private Long createdBy;
 	

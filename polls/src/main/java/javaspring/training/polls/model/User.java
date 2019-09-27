@@ -103,11 +103,11 @@ public class User extends DateAudit {
 	}
 
 	public Set<Role> getRoles() {
-		return roles;
+		return new HashSet<>(roles);
 	}
 
 	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+		this.roles = new HashSet<>(roles);
 	}
 	
 }

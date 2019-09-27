@@ -3,11 +3,11 @@ package javaspring.training.polls.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@SuppressWarnings("serial")
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BadRequestException extends RuntimeException {
-	
-	public BadRequestException(String message) {
+    private static final long serialVersionUID = 7642415891791052771L;
+
+    public BadRequestException(String message) {
 		super(message);
 	}
 	
